@@ -1,2 +1,2 @@
 # Python-doodles
-Python doodles
+Python doodles for fun
