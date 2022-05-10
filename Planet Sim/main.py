@@ -1,12 +1,9 @@
-from abc import update_abstractmethods
-from operator import ne
-from re import U
 import pygame
 import math
 
 pygame.init()
-WIDTH, HEIGHT = 1000, 1000    
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIDTH, HEIGHT = 1920, 1080    
+WIN = pygame.display.set_mode((WIDTH, HEIGHT),pygame.FULLSCREEN, 0, 2, 1 )
 pygame.display.set_caption("Planet Simulation")
 
 COLOR_BACKGROUND = (15, 15, 15)
@@ -20,20 +17,21 @@ COLOR_SATURN = (255, 255, 204)
 COLOR_URANUS = (0, 153, 255)
 COLOR_NEPTUNE = (102, 153, 255)
 
-FONT = pygame.font.SysFont("JetBrains Mono", 26)
+FONT = pygame.font.SysFont("JetBrains Mono", 20)
 
 class Planet:
     AU = 149.6e6 * 1000 # AU in meters
     G = 6.67428e-11 # Gravitaion
-    SCALE = 100 / AU # 1AU = 40 pixels
+    SCALE = 25 / AU # 1AU = 10 pixels
     TIMESTEP = 3600 * 24 # 1 day in seconds
 
-    def __init__(self, x, y, radius, color, mass):
+    def __init__(self, x, y, radius, color, mass, name):
         self.x = x
         self.y = y
         self.radius = radius
         self.color = color
         self.mass = mass
+        self.name = name
 
         self.orbit = []
         self.sun = False
@@ -60,7 +58,9 @@ class Planet:
 
         if not self.sun:
             distance_text = FONT.render(f"{round(self.distance_to_sun/1000000000, 1)}GM", 1, (255,255,255))
-            win.blit(distance_text, (x - distance_text.get_width() / 2, y - distance_text.get_width() / 2))
+            win.blit(distance_text, (x - distance_text.get_width() / 2, y - distance_text.get_width() + 60 / 2))
+            name_text = FONT.render(self.name, 1, (255,255,255))
+            win.blit(name_text, (x - name_text.get_width() / 2, y - name_text.get_width() + 100 / 2))
 
         pygame.draw.circle(win, self.color, (x, y), self.radius)
     
@@ -102,31 +102,31 @@ def main():
     zoom = 1
     FITSIZE = 0.1
 
-    sun = Planet(0, 0, 696 * zoom * FITSIZE / 4, COLOR_SUN, 1.98892 * 10**30)
+    sun = Planet(0, 0, 696 * zoom * FITSIZE / 4 / 4, COLOR_SUN, 1.98892 * 10**30, "Sun")
     sun.sun = True
 
-    mercury = Planet(-0.4 * Planet.AU * zoom, 0, 4 * zoom, COLOR_MERCURY, 0.33 * 10**24)
+    mercury = Planet(-0.4 * Planet.AU * zoom, 0, 2 * zoom, COLOR_MERCURY, 0.33 * 10**24, "Mercury")
     mercury.y_vel = 47.4 * 1000
-    venus = Planet(-0.7 * Planet.AU * zoom, 0, 9 * zoom, COLOR_VENUS, 4.87 * 10**24)
+    venus = Planet(-0.7 * Planet.AU * zoom, 0, 4 * zoom, COLOR_VENUS, 4.87 * 10**24, "Venus")
     venus.y_vel = 35 * 1000
-    earth = Planet(-1 * Planet.AU * zoom, 0, 12 * zoom, COLOR_EARTH, 5.97 * 10**24)
+    earth = Planet(-1 * Planet.AU * zoom, 0, 6 * zoom, COLOR_EARTH, 5.97 * 10**24, "Earth")
     earth.y_vel = 29.8 * 1000
-    mars = Planet(-1.5 * Planet.AU, 0, 6 * zoom, COLOR_MARS, 0.642 * 10**24)
+    mars = Planet(-1.5 * Planet.AU, 0, 3 * zoom, COLOR_MARS, 0.642 * 10**24, "Mars")
     mars.y_vel = 24 * 1000
-    jupiter = Planet(-5.2 * Planet.AU * zoom, 0, 140 * zoom * FITSIZE, COLOR_JUPITER, 1898 * 10**24)
+    jupiter = Planet(-5.2 * Planet.AU * zoom, 0, 70 * zoom * FITSIZE, COLOR_JUPITER, 1898 * 10**24, "Jupiter")
     jupiter.y_vel = 13.1 * 1000
-    saturn = Planet(-9.5 * Planet.AU * zoom, 0, 120 * zoom * FITSIZE, COLOR_SATURN, 568 * 10**24)
+    saturn = Planet(-9.5 * Planet.AU * zoom, 0, 60 * zoom * FITSIZE, COLOR_SATURN, 568 * 10**24, "Saturn")
     saturn.y_vel = 9.7 * 1000
-    uranus = Planet(-19.8 * Planet.AU * zoom, 0, 51 * zoom * FITSIZE, COLOR_URANUS, 86.8 * 10**24)
+    uranus = Planet(-19.8 * Planet.AU * zoom, 0, 25 * zoom * FITSIZE, COLOR_URANUS, 86.8 * 10**24, "Uranus")
     uranus.y_vel = 6.8 * 1000
-    neptune = Planet(-30 * Planet.AU * zoom, 0, 49 * zoom * FITSIZE, COLOR_NEPTUNE, 102 * 10**24)
+    neptune = Planet(-30 * Planet.AU * zoom, 0, 24 * zoom * FITSIZE, COLOR_NEPTUNE, 102 * 10**24, "Neptune")
     neptune.y_vel = 5.4 * 1000
 
 
     planets = [sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 
     while run:
-        clock.tick(60)
+        clock.tick(75)
         WIN.fill(COLOR_BACKGROUND)
         
 
@@ -137,7 +137,7 @@ def main():
         for planet in planets:
             planet.update_position(planets)
             planet.draw(WIN)
-        
+
         pygame.display.update()
     
     pygame.QUIT()
