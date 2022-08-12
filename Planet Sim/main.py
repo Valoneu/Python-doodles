@@ -22,7 +22,7 @@ FONT = pygame.font.SysFont("JetBrains Mono", 20)
 class Planet:
     AU = 149.6e6 * 1000 # AU in meters
     G = 6.67428e-11 # Gravitaion
-    SCALE = 25 / AU # 1AU = 10 pixels
+    SCALE = 60 / AU # 1AU = 10 pixels
     TIMESTEP = 3600 * 24 # 1 day in seconds
 
     def __init__(self, x, y, radius, color, mass, name):
@@ -126,7 +126,7 @@ def main():
     planets = [sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 
     while run:
-        clock.tick(75)
+        clock.tick(120)
         WIN.fill(COLOR_BACKGROUND)
         
 
