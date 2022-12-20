@@ -3,7 +3,7 @@ import math
 
 pygame.init()
 WIDTH, HEIGHT = 1920, 1080    
-WIN = pygame.display.set_mode((WIDTH, HEIGHT),pygame.FULLSCREEN, 0, 2, 1 )
+WIN = pygame.display.set_mode((WIDTH, HEIGHT),pygame.FULLSCREEN, 0, 0, 1 )
 pygame.display.set_caption("Planet Simulation")
 
 COLOR_BACKGROUND = (15, 15, 15)

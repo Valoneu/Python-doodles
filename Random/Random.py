@@ -1,6 +1,5 @@
 #stake dice sim
 
-from audioop import bias
 import random
 
 Broke = False

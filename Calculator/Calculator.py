@@ -1,3 +1,4 @@
+1
 print("select program:","1 -> linear functions",sep = "\n")
 print()
 
