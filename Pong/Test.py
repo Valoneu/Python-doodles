@@ -29,7 +29,7 @@ direction = 'RIGHT'
 change_to = direction
 
 # Snake speed
-snake_speed = 30
+snake_speed = 75
 
 # Frame rate
 clock = pygame.time.Clock()

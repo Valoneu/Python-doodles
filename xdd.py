@@ -98,7 +98,7 @@ bullets = pygame.sprite.Group()
 player = Spaceship()
 all_sprites.add(player)
 
-for i in range(50000):  # Create some asteroids
+for i in range(50):  # Create some asteroids
     asteroid = Asteroid()
     all_sprites.add(asteroid)
     asteroids.add(asteroid)
